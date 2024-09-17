@@ -1,9 +1,10 @@
 name: subtitle_wrapper
 description: A Subtitle Wrapper package, this subtitle wrapper package displays subtitles for a video player.
 version: 0.0.1
+homepage: https://github.com/caua-n/subtitles_wrapper
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.18.0 <4.0.0"
 
 dependencies:
   bloc: ^8.1.4
