@@ -1,3 +1,3 @@
-export 'style/subtitle_styles.dart';
+export 'style/subtitle_style.dart';
 export 'subtitle.dart';
 export 'subtitles.dart';

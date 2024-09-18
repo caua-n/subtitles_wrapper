@@ -10,24 +10,15 @@ class SubtitleWrapper extends StatelessWidget {
     required this.videoPlayerController,
     required this.styleKey,
     super.key,
+    this.subtitleStyle = const SubtitleStyle(),
     this.backgroundColor,
   });
 
   final SubtitleController subtitleController;
   final VlcPlayerController videoPlayerController;
   final int styleKey;
+  final SubtitleStyle subtitleStyle;
   final Color? backgroundColor;
-
-  SubtitleStyle get subtitleStyle {
-    switch (styleKey) {
-      case 1:
-        return SubtitleStyle.smallStyle;
-      case 2:
-        return SubtitleStyle.largeStyle;
-      default:
-        return SubtitleStyle.mediumStyle;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
