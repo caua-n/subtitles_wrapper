@@ -22,28 +22,24 @@ class SubtitleWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 0,
-      bottom: 30,
-      left: 0,
-      right: 0,
-      child: BlocProvider(
-        create: (context) => SubtitleBloc(
-          videoPlayerController: videoPlayerController,
-          subtitleRepository: SubtitleDataRepository(
-            subtitleController: subtitleController,
-          ),
-          subtitleController: subtitleController,
-        )..add(
-            InitSubtitles(
-              subtitleController: subtitleController,
-            ),
-          ),
-        child: SubtitleTextView(
-          subtitleStyle: subtitleStyle,
-          backgroundColor: backgroundColor,
-        ),
-      ),
+    return BlocBuilder<SubtitleBloc, SubtitleState>(
+      builder: (context, state) {
+        if (state is LoadedSubtitle && state.subtitle != null) {
+          final currentPosition = videoPlayerController.value.position;
+          final adjustedPosition =
+              currentPosition - subtitleController.subtitleDelay;
+
+          if (adjustedPosition >= state.subtitle!.startTime &&
+              adjustedPosition <= state.subtitle!.endTime) {
+            return Text(
+              state.subtitle!.text,
+              textAlign: TextAlign.center,
+            );
+          }
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }

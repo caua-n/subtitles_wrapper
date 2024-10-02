@@ -9,11 +9,20 @@ class SubtitleController {
   });
   String? subtitlesContent;
   String? subtitleUrl;
-
+  Duration _subtitleDelay = Duration.zero;
   SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;
   bool _attached = false;
   SubtitleBloc? _subtitleBloc;
+
+  void setSubtitleDelay(Duration delay) {
+    _subtitleDelay = delay;
+    if (_attached) {
+      _subtitleBloc!.add(UpdateSubtitleDelay(delay));
+    }
+  }
+
+  Duration get subtitleDelay => _subtitleDelay;
 
   void attach(SubtitleBloc subtitleBloc) {
     _subtitleBloc = subtitleBloc;

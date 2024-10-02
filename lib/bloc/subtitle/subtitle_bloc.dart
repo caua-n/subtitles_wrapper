@@ -23,6 +23,10 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     on<CompletedShowingSubtitles>(
       (event, emit) => emit(CompletedSubtitle()),
     );
+    on<UpdateSubtitleDelay>((event, emit) {
+      _subtitleDelay = event.delay;
+      loadSubtitle(emit: emit);
+    });
   }
 
   final VlcPlayerController videoPlayerController;
@@ -31,6 +35,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
 
   late Subtitles subtitles;
   Subtitle? _currentSubtitle;
+  Duration _subtitleDelay = Duration.zero;
 
   Future<void> initSubtitles({
     required Emitter<SubtitleState> emit,
@@ -47,21 +52,22 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
     videoPlayerController.addListener(
       () {
         final videoPlayerPosition = videoPlayerController.value.position;
+        final adjustedPosition = videoPlayerPosition - _subtitleDelay;
         if (subtitles.subtitles.isNotEmpty &&
-            videoPlayerPosition.inMilliseconds >
+            adjustedPosition.inMilliseconds >
                 subtitles.subtitles.last.endTime.inMilliseconds) {
           add(CompletedShowingSubtitles());
         }
         for (final subtitleItem in subtitles.subtitles) {
-          final validStartTime = videoPlayerPosition.inMilliseconds >
+          final validStartTime = adjustedPosition.inMilliseconds >
               subtitleItem.startTime.inMilliseconds;
-          final validEndTime = videoPlayerPosition.inMilliseconds <
+          final validEndTime = adjustedPosition.inMilliseconds <
               subtitleItem.endTime.inMilliseconds;
           final subtitle = validStartTime && validEndTime ? subtitleItem : null;
           if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
             _currentSubtitle = subtitle;
           } else if (!_currentSubtitleIsValid(
-            videoPlayerPosition: videoPlayerPosition.inMilliseconds,
+            videoPlayerPosition: adjustedPosition.inMilliseconds,
           )) {
             _currentSubtitle = null;
           }

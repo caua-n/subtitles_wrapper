@@ -26,8 +26,6 @@ class SubtitleTextView extends StatelessWidget {
       }
     }
 
-    //trs
-
     return BlocConsumer<SubtitleBloc, SubtitleState>(
       listener: subtitleBlocListener,
       builder: (context, state) {

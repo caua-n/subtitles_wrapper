@@ -1,7 +1,9 @@
 part of 'subtitle_bloc.dart';
 
-abstract class SubtitleEvent {
+abstract class SubtitleEvent extends Equatable {
   const SubtitleEvent();
+  @override
+  List<Object> get props => [];
 }
 
 class InitSubtitles extends SubtitleEvent {
@@ -17,3 +19,12 @@ class UpdateLoadedSubtitle extends SubtitleEvent {
 }
 
 class CompletedShowingSubtitles extends SubtitleEvent {}
+
+class UpdateSubtitleDelay extends SubtitleEvent {
+  final Duration delay;
+
+  const UpdateSubtitleDelay(this.delay);
+
+  @override
+  List<Object> get props => [delay];
+}
