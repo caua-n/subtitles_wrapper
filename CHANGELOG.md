@@ -1,8 +1,22 @@
 # Changelog
 
+## [0.0.3] - 2024-10-03
+### Added
+- Suporte para atraso nas legendas (subtitles delay), permitindo ajustar o tempo de exibição das legendas em relação ao vídeo.
+
+### Fixed
+- Nenhum bug corrigido nesta versão.
+
+### Changed
+- Nenhuma alteração nesta versão.
+
+### Removed
+- Nenhum recurso removido nesta versão.
+
+
 ## [0.0.2] - 2024-09-18
 ### Added
-- Suporte para personalização completa do estilo de texto das legendas, permitindo que os desenvolvedores definam o `TextStyle` customizado, em vez de escolher apenas entre estilos predefinidos.
+- Suporte para personalização completa do estilo de texto das legendas, permitindo que os desenvolvedores definam o TextStyle customizado, em vez de escolher apenas entre estilos predefinidos.
 
 ### Fixed
 - Nenhum bug corrigido nesta versão.
