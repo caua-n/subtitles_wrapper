@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
-import 'package:subtitle_wrapper/bloc/subtitle/subtitle_bloc.dart';
+import 'package:subtitle_wrapper/subtitle_controller.dart';
 import 'package:subtitle_wrapper/subtitle_wrapper_package.dart';
 
 class SubtitleWrapper extends StatelessWidget {
@@ -22,18 +21,24 @@ class SubtitleWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SubtitleBloc, SubtitleState>(
-      builder: (context, state) {
-        if (state is LoadedSubtitle && state.subtitle != null) {
+    return AnimatedBuilder(
+      animation: subtitleController,
+      builder: (context, child) {
+        final currentSubtitle = subtitleController.currentSubtitle;
+        if (currentSubtitle != null) {
           final currentPosition = videoPlayerController.value.position;
           final adjustedPosition =
               currentPosition - subtitleController.subtitleDelay;
 
-          if (adjustedPosition >= state.subtitle!.startTime &&
-              adjustedPosition <= state.subtitle!.endTime) {
+          if (adjustedPosition >= currentSubtitle.startTime &&
+              adjustedPosition <= currentSubtitle.endTime) {
             return Text(
-              state.subtitle!.text,
+              currentSubtitle.text,
               textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: subtitleStyle.fontSize,
+                color: subtitleStyle.textColor,
+              ),
             );
           }
         }

@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.4] - 2024-10-04
+### Fixed
+- Updated the subtitle handling to use ChangeNotifier for better performance and simplicity.
+
 ## [0.0.3] - 2024-10-03
 ### Added
 - Suporte para atraso nas legendas (subtitles delay), permitindo ajustar o tempo de exibição das legendas em relação ao vídeo.
