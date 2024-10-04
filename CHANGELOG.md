@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.5] - 2024-10-04
+### Fixed
+- SubtitleController now uses ChangeNotifier for better performance and simplicity.
+
 ## [0.0.4] - 2024-10-04
 ### Fixed
 - Updated the subtitle handling to use ChangeNotifier for better performance and simplicity.
