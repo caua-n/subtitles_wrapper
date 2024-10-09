@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.6] - 2024-10-09
+### Added
+- Added functionality to adjust subtitle delay in milliseconds.
+
+### Changed
+- Updated README with usage instructions for subtitle delay feature.
+
+### Fixed
+- Improved subtitle synchronization logic for better accuracy.
+
 ## [0.0.5] - 2024-10-04
 ### Fixed
 - SubtitleController now uses ChangeNotifier for better performance and simplicity.
