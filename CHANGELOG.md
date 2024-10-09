@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.7] - 2024-10-10
+### Added
+- Created a global listener for subtitle delay changes.
+
+### Fixed
+- Resolved issues with double updates and stuttering when adjusting subtitle delay.
+
 ## [0.0.6] - 2024-10-09
 ### Added
 - Added functionality to adjust subtitle delay in milliseconds.

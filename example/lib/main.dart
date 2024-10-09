@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     _subtitleController = SubtitleController(
       subtitleUrl:
-          'https://opensubtitles.playflix.space/tt0371746_Iron.Man.2008.1080p.BluRay.DTS.x264-ESiR.srt',
+          'https://www.opensubtitles.com/download/359337817118D0D29462290D222E3E1DDBF21F0A57BC1518F57249E10AC87A62F0E29F57632274F8A2D21D53833D9F90E45384C9794C3A3CBEA85DC1004048EEF9A336BE0F81C5966B69BE3B4C2DD8820439AAA9FEFDC0CABEBEFDF84DCC33376AA394EFFF28E9D01C953DD2D410BC42603D352E09976055F85CBAFA6F5DE49FFFF3F5087BEFE91976E8E49A5C81A0DCCC50BBCCA465CA5EC5D1D04C3BB8A11D442F0BEC99B82F0FD56CB121B78313B003D53CFDA583DF70BCEB9B8303556FF14F29135CF24F877261B9F40AF0FDB4F1B5B39BAE1799AD6933B652ADAB720A9F2728F21850E41C1E2472C4C5A7EA1DC2D08958C8D84F8A3A/subfile/Iron%20Man.2008.1080p.BluRay.DTS.srt',
       subtitleType: SubtitleType.srt,
       subtitleDecoder: SubtitleDecoder.utf8,
     );
@@ -89,8 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Colors.amber,
+        title: Text('Subtitles for VLC'),
       ),
       body: Stack(
         fit: StackFit.loose,
@@ -168,18 +168,21 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 FloatingActionButton(
+                  backgroundColor: Colors.amber,
                   onPressed: _increaseSubtitleDelay,
                   tooltip: 'Increase Subtitle Delay',
                   child: Icon(Icons.add),
                 ),
                 SizedBox(height: 10),
                 FloatingActionButton(
+                  backgroundColor: Colors.amber,
                   onPressed: _decreaseSubtitleDelay,
                   tooltip: 'Decrease Subtitle Delay',
                   child: Icon(Icons.remove),
                 ),
                 SizedBox(height: 10),
                 FloatingActionButton(
+                  backgroundColor: Colors.amber,
                   onPressed: _togglePlayPause,
                   tooltip: _isPlaying ? 'Pause' : 'Play',
                   child: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),

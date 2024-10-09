@@ -1,4 +1,4 @@
-# Subtitle Wrapper
+# Subtitles Wrapper
 
 The Subtitle Wrapper package provides an easy way to display subtitles for videos using the VLC player in a Flutter application. It supports multiple subtitle formats and allows for dynamic subtitle delay adjustments.
 
@@ -40,7 +40,7 @@ Add the following dependency to your `pubspec.yaml`:
    );
    ```
 
-3. **Use the Subtitle Wrapper:**
+3. **Use the Subtitles Wrapper:**
 
    Wrap your VLC player with the `SubtitleWrapper` widget to display subtitles.
 
@@ -49,13 +49,13 @@ Add the following dependency to your `pubspec.yaml`:
    endLine: 48
    ```
 
-4. **Adjust Subtitle Delay:**
+4. **Adjust Subtitles Delay:**
 
    Use the `addSubtitleDelay` and `removeSubtitleDelay` methods to adjust the subtitle delay in milliseconds.
 
    ```dart:lib/subtitle_controller.dart
-   startLine: 59
-   endLine: 66
+   startLine: 72
+   endLine: 86
    ```
 
 ### Example
