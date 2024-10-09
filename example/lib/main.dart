@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late VlcPlayerController _vlcPlayerController;
   late SubtitleController _subtitleController;
   bool _isPlaying = true;
+  double _sliderValue = 0.0;
 
   @override
   void initState() {
@@ -52,6 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
       subtitleType: SubtitleType.srt,
       subtitleDecoder: SubtitleDecoder.utf8,
     );
+    _vlcPlayerController.addListener(() {
+      setState(() {
+        _sliderValue = _vlcPlayerController.value.position.inSeconds.toDouble();
+      });
+    });
   }
 
   @override
@@ -79,24 +85,64 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Stack(
+        fit: StackFit.loose,
         children: [
-          Center(
-            child: VlcPlayer(
-              controller: _vlcPlayerController,
-              aspectRatio: 16 / 9,
-              placeholder: const Center(child: CircularProgressIndicator()),
-            ),
-          ),
-          Center(
-            child: SubtitleWrapper(
-              videoPlayerController: _vlcPlayerController,
-              subtitleController: _subtitleController,
-              styleKey: 1,
-              subtitleStyle: const SubtitleStyle(
-                fontSize: 16,
-                textColor: Colors.black,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              VlcPlayer(
+                controller: _vlcPlayerController,
+                aspectRatio: 16 / 9,
+                placeholder: const Center(child: CircularProgressIndicator()),
               ),
-            ),
+              Container(
+                color: Colors.black,
+                width: MediaQuery.sizeOf(context).width,
+                height: 80,
+                child: SubtitleWrapper(
+                  videoPlayerController: _vlcPlayerController,
+                  subtitleController: _subtitleController,
+                  styleKey: 1,
+                  subtitleStyle: const SubtitleStyle(
+                    fontSize: 16,
+                    textColor: Colors.white,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    overlayShape: SliderComponentShape.noThumb,
+                    valueIndicatorColor: Colors.red,
+                    activeTrackColor: Colors.grey,
+                    inactiveTrackColor: Colors.grey.shade200,
+                    secondaryActiveTrackColor: Colors.green,
+                    thumbColor: Colors.amber,
+                    trackHeight: 4.0,
+                    thumbShape:
+                        const RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                  ),
+                  child: Slider(
+                    min: 0.0,
+                    max: _vlcPlayerController.value.duration.inSeconds
+                        .toDouble(),
+                    value: _sliderValue,
+                    secondaryTrackValue:
+                        _vlcPlayerController.value.bufferPercent.toDouble(),
+                    onChanged: (value) {
+                      setState(() {
+                        _sliderValue = value;
+                      });
+                    },
+                    onChangeEnd: (value) {
+                      final position = Duration(seconds: value.toInt());
+                      _vlcPlayerController.setTime(position.inMilliseconds);
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
           Positioned(
             bottom: 20,

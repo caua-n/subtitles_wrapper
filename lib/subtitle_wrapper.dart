@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
-import 'package:subtitle_wrapper/subtitle_controller.dart';
+import 'package:subtitle_wrapper/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper/subtitle_wrapper_package.dart';
 
 class SubtitleWrapper extends StatelessWidget {
@@ -21,30 +22,28 @@ class SubtitleWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: subtitleController,
-      builder: (context, child) {
-        final currentSubtitle = subtitleController.currentSubtitle;
-        if (currentSubtitle != null) {
-          final currentPosition = videoPlayerController.value.position;
-          final adjustedPosition =
-              currentPosition - subtitleController.subtitleDelay;
-
-          if (adjustedPosition >= currentSubtitle.startTime &&
-              adjustedPosition <= currentSubtitle.endTime) {
-            return Text(
-              currentSubtitle.text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: subtitleStyle.fontSize,
-                color: subtitleStyle.textColor,
-              ),
-            );
-          }
-        }
-
-        return const SizedBox.shrink();
-      },
+    return Positioned(
+      top: 0,
+      bottom: 30,
+      left: 0,
+      right: 0,
+      child: BlocProvider(
+        create: (context) => SubtitleBloc(
+          videoPlayerController: videoPlayerController,
+          subtitleRepository: SubtitleDataRepository(
+            subtitleController: subtitleController,
+          ),
+          subtitleController: subtitleController,
+        )..add(
+            InitSubtitles(
+              subtitleController: subtitleController,
+            ),
+          ),
+        child: SubtitleTextView(
+          subtitleStyle: subtitleStyle,
+          backgroundColor: backgroundColor,
+        ),
+      ),
     );
   }
 }

@@ -259,10 +259,9 @@ packages:
   subtitle_wrapper:
     dependency: "direct main"
     description:
-      name: subtitle_wrapper
-      sha256: "9cb52c980fb01a6459d69c633afb178433017a057a5763610d95cab7156766b1"
-      url: "https://pub.dev"
-    source: hosted
+      path: ".."
+      relative: true
+    source: path
     version: "0.0.5"
   term_glyph:
     dependency: transitive

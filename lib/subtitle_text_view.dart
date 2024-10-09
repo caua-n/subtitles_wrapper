@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:subtitle_wrapper/subtitle_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:subtitle_wrapper/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper/data/constants/view_keys.dart';
+
 import 'package:subtitle_wrapper/data/models/style/subtitle_style.dart';
 
 class SubtitleTextView extends StatelessWidget {
   const SubtitleTextView({
-    required this.subtitleController,
     required this.subtitleStyle,
     super.key,
     this.backgroundColor,
   });
-
-  final SubtitleController subtitleController;
   final SubtitleStyle subtitleStyle;
+
   final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: subtitleController,
-      builder: (context, child) {
-        final currentSubtitle = subtitleController.currentSubtitle;
-        if (currentSubtitle != null) {
+    final subtitleBloc = BlocProvider.of<SubtitleBloc>(context);
+
+    void subtitleBlocListener(BuildContext _, SubtitleState state) {
+      if (state is SubtitleInitialized) {
+        subtitleBloc.add(LoadSubtitle());
+      }
+    }
+
+    return BlocConsumer<SubtitleBloc, SubtitleState>(
+      listener: subtitleBlocListener,
+      builder: (context, state) {
+        if (state is LoadedSubtitle && state.subtitle != null) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -29,7 +36,7 @@ class SubtitleTextView extends StatelessWidget {
                 color: Colors.transparent,
                 padding: const EdgeInsets.only(bottom: 20),
                 child: _TextContent(
-                  text: currentSubtitle.text,
+                  text: state.subtitle!.text,
                   textStyle: TextStyle(
                     fontSize: subtitleStyle.fontSize,
                     color: subtitleStyle.textColor,

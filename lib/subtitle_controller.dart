@@ -1,44 +1,58 @@
-import 'package:flutter/foundation.dart';
-import 'package:subtitle_wrapper/data/models/subtitle.dart';
+import 'package:subtitle_wrapper/bloc/subtitle/subtitle_bloc.dart';
 
-class SubtitleController extends ChangeNotifier {
+class SubtitleController {
   SubtitleController({
     this.subtitleUrl,
     this.subtitlesContent,
     this.subtitleDecoder,
     this.subtitleType = SubtitleType.webvtt,
   });
-
   String? subtitlesContent;
   String? subtitleUrl;
-  Duration _subtitleDelay = Duration.zero;
+
   SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;
-  Subtitle? _currentSubtitle;
+  bool _attached = false;
+  SubtitleBloc? _subtitleBloc;
 
-  Subtitle? get currentSubtitle => _currentSubtitle;
-  Duration get subtitleDelay => _subtitleDelay;
-
-  void setSubtitleDelay(Duration delay) {
-    _subtitleDelay = delay;
-    notifyListeners();
+  void attach(SubtitleBloc subtitleBloc) {
+    _subtitleBloc = subtitleBloc;
+    _attached = true;
   }
 
-  void updateCurrentSubtitle(Subtitle? subtitle) {
-    if (subtitle != _currentSubtitle) {
-      _currentSubtitle = subtitle;
-      notifyListeners();
+  void detach() {
+    _attached = false;
+    _subtitleBloc = null;
+  }
+
+  void updateSubtitleUrl({
+    required String url,
+  }) {
+    if (_attached) {
+      subtitleUrl = url;
+      _subtitleBloc!.add(
+        InitSubtitles(
+          subtitleController: this,
+        ),
+      );
+    } else {
+      throw Exception('Seems that the controller is not correctly attached.');
     }
   }
 
-  void updateSubtitleUrl(String url) {
-    subtitleUrl = url;
-    notifyListeners();
-  }
-
-  void updateSubtitleContent(String content) {
-    subtitlesContent = content;
-    notifyListeners();
+  void updateSubtitleContent({
+    required String content,
+  }) {
+    if (_attached) {
+      subtitlesContent = content;
+      _subtitleBloc!.add(
+        InitSubtitles(
+          subtitleController: this,
+        ),
+      );
+    } else {
+      throw Exception('Seems that the controller is not correctly attached.');
+    }
   }
 }
 

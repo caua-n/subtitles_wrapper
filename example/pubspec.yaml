@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_vlc_player: ^7.4.2
   subtitle_wrapper:
+    path: ../
 
 dev_dependencies:
   flutter_test:
