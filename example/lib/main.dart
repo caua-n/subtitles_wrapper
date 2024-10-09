@@ -53,11 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
       subtitleType: SubtitleType.srt,
       subtitleDecoder: SubtitleDecoder.utf8,
     );
-    // _vlcPlayerController.addListener(() {
-    //   setState(() {
-    //     _sliderValue = _vlcPlayerController.value.position.inSeconds.toDouble();
-    //   });
-    // });
+    _vlcPlayerController.addListener(() {
+      setState(() {
+        _sliderValue = _vlcPlayerController.value.position.inSeconds.toDouble();
+      });
+    });
   }
 
   @override
@@ -78,11 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _increaseSubtitleDelay() {
-    _subtitleController.addSubtitleDelay(1);
+    _subtitleController.addSubtitleDelay(100);
   }
 
   void _decreaseSubtitleDelay() {
-    _subtitleController.removeSubtitleDelay(1);
+    _subtitleController.removeSubtitleDelay(100);
   }
 
   @override
@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Text('Delay ${_subtitleController.subtitleDelay.toString()}'),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20.0),
                 child: SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     overlayShape: SliderComponentShape.noThumb,

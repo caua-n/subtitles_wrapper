@@ -56,13 +56,13 @@ class SubtitleController {
     }
   }
 
-  void addSubtitleDelay(int seconds) {
-    _subtitleDelay += seconds * 1000;
+  void addSubtitleDelay(int milliseconds) {
+    _subtitleDelay += milliseconds;
     _notifyDelayChange();
   }
 
-  void removeSubtitleDelay(int seconds) {
-    _subtitleDelay -= seconds * 1000;
+  void removeSubtitleDelay(int milliseconds) {
+    _subtitleDelay -= milliseconds;
     _notifyDelayChange();
   }
 
