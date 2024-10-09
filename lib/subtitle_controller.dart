@@ -1,4 +1,16 @@
 import 'package:subtitle_wrapper/bloc/subtitle/subtitle_bloc.dart';
+import 'dart:ui';
+import 'dart:async';
+
+final List<VoidCallback> globalListeners = [];
+
+void addGlobalListener(VoidCallback listener) {
+  globalListeners.add(listener);
+}
+
+void removeGlobalListener(VoidCallback listener) {
+  globalListeners.remove(listener);
+}
 
 class SubtitleController {
   SubtitleController({
@@ -14,7 +26,8 @@ class SubtitleController {
   SubtitleType subtitleType;
   bool _attached = false;
   SubtitleBloc? _subtitleBloc;
-  int _subtitleDelay = 0; // Delay in milliseconds
+  double _subtitleDelay = 0;
+  Timer? _throttleTimer;
 
   void attach(SubtitleBloc subtitleBloc) {
     _subtitleBloc = subtitleBloc;
@@ -56,17 +69,25 @@ class SubtitleController {
     }
   }
 
-  void addSubtitleDelay(int milliseconds) {
+  void addSubtitleDelay(double milliseconds) {
     _subtitleDelay += milliseconds;
-    _notifyDelayChange();
+    _throttleNotifyDelayChange();
   }
 
-  void removeSubtitleDelay(int milliseconds) {
+  void removeSubtitleDelay(double milliseconds) {
     _subtitleDelay -= milliseconds;
-    _notifyDelayChange();
+    _throttleNotifyDelayChange();
   }
 
-  int get subtitleDelay => _subtitleDelay;
+  double get subtitleDelay => _subtitleDelay;
+
+  void _throttleNotifyDelayChange() {
+    if (_throttleTimer?.isActive ?? false) return;
+
+    _throttleTimer = Timer(Duration(milliseconds: 100), () {
+      _notifyDelayChange();
+    });
+  }
 
   void _notifyDelayChange() {
     if (_attached) {
@@ -75,6 +96,9 @@ class SubtitleController {
           subtitleController: this,
         ),
       );
+    }
+    for (final listener in globalListeners) {
+      listener();
     }
   }
 }

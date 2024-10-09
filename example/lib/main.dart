@@ -78,11 +78,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _increaseSubtitleDelay() {
-    _subtitleController.addSubtitleDelay(100);
+    _subtitleController.addSubtitleDelay(0.1);
   }
 
   void _decreaseSubtitleDelay() {
-    _subtitleController.removeSubtitleDelay(100);
+    _subtitleController.removeSubtitleDelay(0.1);
   }
 
   @override
