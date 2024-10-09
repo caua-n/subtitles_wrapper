@@ -14,6 +14,7 @@ class SubtitleController {
   SubtitleType subtitleType;
   bool _attached = false;
   SubtitleBloc? _subtitleBloc;
+  int _subtitleDelay = 0; // Delay in milliseconds
 
   void attach(SubtitleBloc subtitleBloc) {
     _subtitleBloc = subtitleBloc;
@@ -52,6 +53,28 @@ class SubtitleController {
       );
     } else {
       throw Exception('Seems that the controller is not correctly attached.');
+    }
+  }
+
+  void addSubtitleDelay(int seconds) {
+    _subtitleDelay += seconds * 1000;
+    _notifyDelayChange();
+  }
+
+  void removeSubtitleDelay(int seconds) {
+    _subtitleDelay -= seconds * 1000;
+    _notifyDelayChange();
+  }
+
+  int get subtitleDelay => _subtitleDelay;
+
+  void _notifyDelayChange() {
+    if (_attached) {
+      _subtitleBloc!.add(
+        InitSubtitles(
+          subtitleController: this,
+        ),
+      );
     }
   }
 }

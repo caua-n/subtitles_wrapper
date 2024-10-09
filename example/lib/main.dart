@@ -53,11 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
       subtitleType: SubtitleType.srt,
       subtitleDecoder: SubtitleDecoder.utf8,
     );
-    _vlcPlayerController.addListener(() {
-      setState(() {
-        _sliderValue = _vlcPlayerController.value.position.inSeconds.toDouble();
-      });
-    });
+    // _vlcPlayerController.addListener(() {
+    //   setState(() {
+    //     _sliderValue = _vlcPlayerController.value.position.inSeconds.toDouble();
+    //   });
+    // });
   }
 
   @override
@@ -75,6 +75,14 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       _isPlaying = !_isPlaying;
     });
+  }
+
+  void _increaseSubtitleDelay() {
+    _subtitleController.addSubtitleDelay(1);
+  }
+
+  void _decreaseSubtitleDelay() {
+    _subtitleController.removeSubtitleDelay(1);
   }
 
   @override
@@ -109,6 +117,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Position ${_vlcPlayerController.value.position}'),
+                  SizedBox(width: 10),
+                  Text(
+                      'Duration ${_vlcPlayerController.value.duration.toString()}'),
+                ],
+              ),
+              Text('Delay ${_subtitleController.subtitleDelay.toString()}'),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SliderTheme(
@@ -147,10 +165,26 @@ class _MyHomePageState extends State<MyHomePage> {
           Positioned(
             bottom: 20,
             right: 20,
-            child: FloatingActionButton(
-              onPressed: _togglePlayPause,
-              tooltip: _isPlaying ? 'Pause' : 'Play',
-              child: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
+            child: Column(
+              children: [
+                FloatingActionButton(
+                  onPressed: _increaseSubtitleDelay,
+                  tooltip: 'Increase Subtitle Delay',
+                  child: Icon(Icons.add),
+                ),
+                SizedBox(height: 10),
+                FloatingActionButton(
+                  onPressed: _decreaseSubtitleDelay,
+                  tooltip: 'Decrease Subtitle Delay',
+                  child: Icon(Icons.remove),
+                ),
+                SizedBox(height: 10),
+                FloatingActionButton(
+                  onPressed: _togglePlayPause,
+                  tooltip: _isPlaying ? 'Pause' : 'Play',
+                  child: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
+                ),
+              ],
             ),
           ),
         ],
