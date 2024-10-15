@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.8] - 2024-10-15
+### Added
+- Created shadow in text content.
+
 ## [0.0.7] - 2024-10-10
 ### Added
 - Created a global listener for subtitle delay changes.
