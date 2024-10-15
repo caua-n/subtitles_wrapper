@@ -7,7 +7,6 @@ class SubtitleStyle {
     this.fontSize = _defaultFontSize,
     this.textColor = Colors.yellow,
   });
-
   final double fontSize;
   final Color textColor;
 }

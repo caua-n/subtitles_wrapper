@@ -12,7 +12,6 @@ class SubtitleTextView extends StatelessWidget {
     this.backgroundColor,
   });
   final SubtitleStyle subtitleStyle;
-
   final Color? backgroundColor;
 
   @override
@@ -39,6 +38,13 @@ class SubtitleTextView extends StatelessWidget {
                   text: state.subtitle!.text,
                   textStyle: TextStyle(
                     fontSize: subtitleStyle.fontSize,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(0, 0),
+                        blurRadius: 8.0,
+                        color: Colors.black87,
+                      ),
+                    ],
                     color: subtitleStyle.textColor,
                   ),
                 ),

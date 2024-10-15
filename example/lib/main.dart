@@ -3,6 +3,7 @@ import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:subtitle_wrapper/data/models/style/subtitle_style.dart';
 import 'package:subtitle_wrapper/subtitle_controller.dart';
 import 'package:subtitle_wrapper/subtitle_wrapper.dart';
+import 'package:subtitle_wrapper/subtitle_wrapper_package.dart';
 
 void main() {
   runApp(const MyApp());
@@ -92,81 +93,78 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.amber,
         title: Text('Subtitles for VLC'),
       ),
-      body: Stack(
-        fit: StackFit.loose,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              VlcPlayer(
-                controller: _vlcPlayerController,
-                aspectRatio: 16 / 9,
-                placeholder: const Center(child: CircularProgressIndicator()),
-              ),
-              Container(
-                color: Colors.black,
-                width: MediaQuery.sizeOf(context).width,
-                height: 80,
-                child: SubtitleWrapper(
-                  videoPlayerController: _vlcPlayerController,
-                  subtitleController: _subtitleController,
-                  styleKey: 1,
-                  subtitleStyle: const SubtitleStyle(
-                    fontSize: 16,
-                    textColor: Colors.white,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Position ${_vlcPlayerController.value.position}'),
-                  SizedBox(width: 10),
-                  Text(
-                      'Duration ${_vlcPlayerController.value.duration.toString()}'),
-                ],
-              ),
-              Text('Delay ${_subtitleController.subtitleDelay.toString()}'),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SliderTheme(
-                  data: SliderTheme.of(context).copyWith(
-                    overlayShape: SliderComponentShape.noThumb,
-                    valueIndicatorColor: Colors.red,
-                    activeTrackColor: Colors.grey,
-                    inactiveTrackColor: Colors.grey.shade200,
-                    secondaryActiveTrackColor: Colors.green,
-                    thumbColor: Colors.amber,
-                    trackHeight: 4.0,
-                    thumbShape:
-                        const RoundSliderThumbShape(enabledThumbRadius: 10.0),
-                  ),
-                  child: Slider(
-                    min: 0.0,
-                    max: _vlcPlayerController.value.duration.inSeconds
-                        .toDouble(),
-                    value: _sliderValue,
-                    secondaryTrackValue:
-                        _vlcPlayerController.value.bufferPercent.toDouble(),
-                    onChanged: (value) {
-                      setState(() {
-                        _sliderValue = value;
-                      });
-                    },
-                    onChangeEnd: (value) {
-                      final position = Duration(seconds: value.toInt());
-                      _vlcPlayerController.setTime(position.inMilliseconds);
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: Column(
+      body: ValueListenableBuilder(
+          valueListenable: _vlcPlayerController,
+          builder: (context, value, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    VlcPlayer(
+                      controller: _vlcPlayerController,
+                      aspectRatio: 16 / 9,
+                      placeholder:
+                          const Center(child: CircularProgressIndicator()),
+                    ),
+                    SizedBox(
+                      height: 80,
+                      child: SubtitleWrapper(
+                        videoPlayerController: _vlcPlayerController,
+                        subtitleController: _subtitleController,
+                        styleKey: 1,
+                        subtitleStyle: const SubtitleStyle(
+                          fontSize: 16,
+                          textColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Position ${_vlcPlayerController.value.position}'),
+                    SizedBox(width: 10),
+                    Text(
+                        'Duration ${_vlcPlayerController.value.duration.toString()}'),
+                  ],
+                ),
+                Text(
+                    'Delay ${_subtitleController.subtitleDelay.toStringAsFixed(1)}'),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      overlayShape: SliderComponentShape.noThumb,
+                      valueIndicatorColor: Colors.red,
+                      activeTrackColor: Colors.grey,
+                      inactiveTrackColor: Colors.grey.shade200,
+                      thumbColor: Colors.amber,
+                      trackHeight: 4.0,
+                      thumbShape:
+                          const RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                    ),
+                    child: Slider(
+                      min: 0.0,
+                      max: _vlcPlayerController.value.duration.inSeconds
+                          .toDouble(),
+                      value: _sliderValue,
+                      secondaryTrackValue:
+                          _vlcPlayerController.value.bufferPercent.toDouble(),
+                      onChanged: (value) {
+                        setState(() {
+                          _sliderValue = value;
+                        });
+                      },
+                      onChangeEnd: (value) {
+                        final position = Duration(seconds: value.toInt());
+                        _vlcPlayerController.setTime(position.inMilliseconds);
+                      },
+                    ),
+                  ),
+                ),
                 FloatingActionButton(
                   backgroundColor: Colors.amber,
                   onPressed: _increaseSubtitleDelay,
@@ -188,10 +186,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
+            );
+          }),
     );
   }
 }
