@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.0] - 2024-11-05
+### Added
+- Controller name fix
+
 ## [0.0.9] - 2024-11-05
 ### Added
 - Name update
