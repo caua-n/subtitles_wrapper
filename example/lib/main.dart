@@ -36,7 +36,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late VlcPlayerController _vlcPlayerController;
-  late SubtitleController _subtitleController;
+  late UniversalSubtitleController _subtitleController;
   bool _isPlaying = true;
   double _sliderValue = 0.0;
 
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
       autoPlay: true,
       options: VlcPlayerOptions(),
     );
-    _subtitleController = SubtitleController(
+    _subtitleController = UniversalSubtitleController(
       subtitleUrl:
           'https://www.opensubtitles.com/download/359337817118D0D29462290D222E3E1DDBF21F0A57BC1518F57249E10AC87A62F0E29F57632274F8A2D21D53833D9F90E45384C9794C3A3CBEA85DC1004048EEF9A336BE0F81C5966B69BE3B4C2DD8820439AAA9FEFDC0CABEBEFDF84DCC33376AA394EFFF28E9D01C953DD2D410BC42603D352E09976055F85CBAFA6F5DE49FFFF3F5087BEFE91976E8E49A5C81A0DCCC50BBCCA465CA5EC5D1D04C3BB8A11D442F0BEC99B82F0FD56CB121B78313B003D53CFDA583DF70BCEB9B8303556FF14F29135CF24F877261B9F40AF0FDB4F1B5B39BAE1799AD6933B652ADAB720A9F2728F21850E41C1E2472C4C5A7EA1DC2D08958C8D84F8A3A/subfile/Iron%20Man.2008.1080p.BluRay.DTS.srt',
       subtitleType: SubtitleType.srt,
