@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:subtitle_wrapper/bloc/subtitle/subtitle_bloc.dart';
 import 'package:subtitle_wrapper/data/constants/view_keys.dart';
 
-import 'package:subtitle_wrapper/data/models/style/subtitle_styles.dart';
+import 'package:subtitle_wrapper/data/models/style/subtitle_style.dart';
 
 class SubtitleTextView extends StatelessWidget {
   const SubtitleTextView({
@@ -12,28 +12,17 @@ class SubtitleTextView extends StatelessWidget {
     this.backgroundColor,
   });
   final SubtitleStyle subtitleStyle;
-
   final Color? backgroundColor;
-
-  TextStyle get _textStyle {
-    return TextStyle(
-      fontSize: subtitleStyle.fontSize,
-      color: subtitleStyle.textColor,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     final subtitleBloc = BlocProvider.of<SubtitleBloc>(context);
 
-    // TODO: Trocar para changenotifier manter padrao projeto
     void subtitleBlocListener(BuildContext _, SubtitleState state) {
       if (state is SubtitleInitialized) {
         subtitleBloc.add(LoadSubtitle());
       }
     }
-
-    //trs
 
     return BlocConsumer<SubtitleBloc, SubtitleState>(
       listener: subtitleBlocListener,
@@ -47,7 +36,17 @@ class SubtitleTextView extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: _TextContent(
                   text: state.subtitle!.text,
-                  textStyle: _textStyle,
+                  textStyle: TextStyle(
+                    fontSize: subtitleStyle.fontSize,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(0, 0),
+                        blurRadius: 8.0,
+                        color: Colors.black87,
+                      ),
+                    ],
+                    color: subtitleStyle.textColor,
+                  ),
                 ),
               ),
             ],

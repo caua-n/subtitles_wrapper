@@ -31,6 +31,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
 
   late Subtitles subtitles;
   Subtitle? _currentSubtitle;
+  int _lastSubtitleIndex = 0;
 
   Future<void> initSubtitles({
     required Emitter<SubtitleState> emit,
@@ -52,25 +53,36 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
                 subtitles.subtitles.last.endTime.inMilliseconds) {
           add(CompletedShowingSubtitles());
         }
-        for (final subtitleItem in subtitles.subtitles) {
-          final validStartTime = videoPlayerPosition.inMilliseconds >
-              subtitleItem.startTime.inMilliseconds;
-          final validEndTime = videoPlayerPosition.inMilliseconds <
-              subtitleItem.endTime.inMilliseconds;
+
+        for (var i = _lastSubtitleIndex; i < subtitles.subtitles.length; i++) {
+          final subtitleItem = subtitles.subtitles[i];
+          final adjustedStartTime = subtitleItem.startTime.inMilliseconds +
+              subtitleController.subtitleDelay;
+          final adjustedEndTime = subtitleItem.endTime.inMilliseconds +
+              subtitleController.subtitleDelay;
+
+          final validStartTime =
+              videoPlayerPosition.inMilliseconds > adjustedStartTime;
+          final validEndTime =
+              videoPlayerPosition.inMilliseconds < adjustedEndTime;
           final subtitle = validStartTime && validEndTime ? subtitleItem : null;
+
           if (validStartTime && validEndTime && subtitle != _currentSubtitle) {
             _currentSubtitle = subtitle;
+            _lastSubtitleIndex = i;
+            break;
           } else if (!_currentSubtitleIsValid(
             videoPlayerPosition: videoPlayerPosition.inMilliseconds,
           )) {
             _currentSubtitle = null;
           }
-          add(
-            UpdateLoadedSubtitle(
-              subtitle: _currentSubtitle,
-            ),
-          );
         }
+
+        add(
+          UpdateLoadedSubtitle(
+            subtitle: _currentSubtitle,
+          ),
+        );
       },
     );
   }
