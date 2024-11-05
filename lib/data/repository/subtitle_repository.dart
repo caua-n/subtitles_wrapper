@@ -11,7 +11,7 @@ abstract class SubtitleRepository {
 
 class SubtitleDataRepository extends SubtitleRepository {
   SubtitleDataRepository({required this.subtitleController});
-  final SubtitleController subtitleController;
+  final UniversalSubtitleController subtitleController;
 
   // Gets the subtitle content type.
   SubtitleDecoder requestContentType(Map<String, dynamic> headers) {

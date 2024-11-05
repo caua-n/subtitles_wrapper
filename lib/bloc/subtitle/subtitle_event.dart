@@ -6,7 +6,7 @@ abstract class SubtitleEvent {
 
 class InitSubtitles extends SubtitleEvent {
   InitSubtitles({required this.subtitleController});
-  final SubtitleController subtitleController;
+  final UniversalSubtitleController subtitleController;
 }
 
 class LoadSubtitle extends SubtitleEvent {}

@@ -13,7 +13,7 @@ class SubtitleWrapper extends StatelessWidget {
     this.backgroundColor,
   });
 
-  final SubtitleController subtitleController;
+  final UniversalSubtitleController subtitleController;
   final VlcPlayerController videoPlayerController;
   final int styleKey;
   final Color? backgroundColor;

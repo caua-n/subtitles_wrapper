@@ -1,7 +1,7 @@
 import 'package:subtitle_wrapper/bloc/subtitle/subtitle_bloc.dart';
 
-class SubtitleController {
-  SubtitleController({
+class UniversalSubtitleController {
+  UniversalSubtitleController({
     this.subtitleUrl,
     this.subtitlesContent,
     this.subtitleDecoder,

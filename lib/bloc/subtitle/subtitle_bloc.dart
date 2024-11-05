@@ -27,7 +27,7 @@ class SubtitleBloc extends Bloc<SubtitleEvent, SubtitleState> {
 
   final VlcPlayerController videoPlayerController;
   final SubtitleRepository subtitleRepository;
-  final SubtitleController subtitleController;
+  final UniversalSubtitleController subtitleController;
 
   late Subtitles subtitles;
   Subtitle? _currentSubtitle;
