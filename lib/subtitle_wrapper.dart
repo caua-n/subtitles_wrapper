@@ -6,7 +6,7 @@ import 'package:subtitle_wrapper/subtitle_wrapper_package.dart';
 
 class SubtitleWrapper extends StatelessWidget {
   const SubtitleWrapper({
-    required this.subtitleController,
+    required this.universalSubtitleController,
     required this.videoPlayerController,
     required this.styleKey,
     super.key,
@@ -14,7 +14,7 @@ class SubtitleWrapper extends StatelessWidget {
     this.backgroundColor,
   });
 
-  final UniversalSubtitleController subtitleController;
+  final UniversalSubtitleController universalSubtitleController;
   final VlcPlayerController videoPlayerController;
   final int styleKey;
   final SubtitleStyle subtitleStyle;
@@ -34,12 +34,12 @@ class SubtitleWrapper extends StatelessWidget {
             create: (context) => SubtitleBloc(
               videoPlayerController: videoPlayerController,
               subtitleRepository: SubtitleDataRepository(
-                subtitleController: subtitleController,
+                subtitleController: universalSubtitleController,
               ),
-              subtitleController: subtitleController,
+              subtitleController: universalSubtitleController,
             )..add(
                 InitSubtitles(
-                  subtitleController: subtitleController,
+                  subtitleController: universalSubtitleController,
                 ),
               ),
             child: SubtitleTextView(

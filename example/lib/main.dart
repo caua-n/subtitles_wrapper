@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 80,
                       child: SubtitleWrapper(
                         videoPlayerController: _vlcPlayerController,
-                        subtitleController: _subtitleController,
+                        universalSubtitleController: _subtitleController,
                         styleKey: 1,
                         subtitleStyle: const SubtitleStyle(
                           fontSize: 16,

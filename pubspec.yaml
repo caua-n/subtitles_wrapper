@@ -1,6 +1,6 @@
 name: subtitle_wrapper
 description: A Subtitle Wrapper package, this subtitle wrapper package displays subtitles for a vlc player.
-version: 0.0.8
+version: 0.0.9
 homepage: https://github.com/caua-n/subtitles_wrapper
 
 environment:

@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.9] - 2024-11-05
+### Added
+- Name update
+
 ## [0.0.8] - 2024-10-15
 ### Added
 - Created shadow in text content.
