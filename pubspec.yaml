@@ -1,6 +1,6 @@
 name: subtitle_wrapper
 description: A Subtitle Wrapper package, this subtitle wrapper package displays subtitles for implemented players.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/caua-n/subtitles_wrapper
 
 environment:

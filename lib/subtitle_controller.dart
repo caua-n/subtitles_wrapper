@@ -14,13 +14,13 @@ void removeGlobalListener(VoidCallback listener) {
 
 class UniversalSubtitleController {
   UniversalSubtitleController({
-    this.subtitleUrl,
+    required this.subtitleUrl,
     this.subtitlesContent,
     this.subtitleDecoder,
     this.subtitleType = SubtitleType.webvtt,
   });
   String? subtitlesContent;
-  String? subtitleUrl;
+  String subtitleUrl;
 
   SubtitleDecoder? subtitleDecoder;
   SubtitleType subtitleType;

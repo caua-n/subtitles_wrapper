@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.1] - 2024-11-27
+### Added
+- required var
+
 ## [0.1.0] - 2024-11-05
 ### Added
 - Controller name fix

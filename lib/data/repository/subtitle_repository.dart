@@ -37,7 +37,7 @@ class SubtitleDataRepository extends SubtitleRepository {
     final subtitleUrl = subtitleController.subtitleUrl;
 
     // If the subtitle content parameter is empty we will load the subtitle from the specified url.
-    if (subtitlesContent == null && subtitleUrl != null) {
+    if (subtitlesContent == null) {
       // Lets load the subtitle content from the url.
       subtitlesContent = await loadRemoteSubtitleContent(
         subtitleUrl: subtitleUrl,
